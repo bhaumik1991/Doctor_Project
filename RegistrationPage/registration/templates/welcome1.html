@@ -1,0 +1,164 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Registration</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+</head>
+<body class="override">
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="">Doctor</a>
+            </div>
+
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                        <li><a href="">{{ object.full_name }}</a></li>
+                    <li><a href="/registration/logout">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% block content %}
+    <form action="{% url 'registration:prescription_create' %}" method="POST">
+    {% csrf_token %}
+        <div class="container">
+        <h1 style="float:right">{{ object.hospital_name }}</h1>
+            <h1 style="text-align: center; color: blue">Prescription</h1>
+                <hr style="border-color: black; border-width: thick">
+                <h1>Patient Detail</h1>
+                <hr style="border-color: black">
+                <br>
+                <div class="container">
+                    <div class="row">
+                        <div class="form-group col-md-2">
+                            <label for="{{ form.patient_name.id_for_label }}" class="">Patient Name</label>
+                            <div>
+                                <input type="text" name="patient_name" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="{{ form.phone_number.id_for_label }}" class="">Phone Number</label>
+                            <div class="">
+                                <input type="tel" name="phone_number1" maxlength="10" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="{{ form.age.id_for_label }}" class="col-md-4 control-label text-right">Age</label>
+                            <div class="">
+                                <input type="tel" name="age" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="{{ form.weight.id_for_label }}" class="col-md-4 control-label text-right">Weight</label>
+                            <div class="">
+                                <input type="tel" name="weight" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="{{ form.gender.id_for_label }}" class="">Gender</label>
+                            <div class="">
+                                <select class="form-control" name="gender">
+                                     <option value="iam">Choose Gender</option>
+                                     <option value="male">Male</option>
+                                     <option value="female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <h1>Mediciene</h1>
+                <div class="container">
+                </div>
+                <hr style="border-color: black">
+                <div class="container">
+                    <table id="tblMediciene" class="table order-list">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Mediciene Name</th>
+                                <th>Mg/Ml</th>
+                                <th>Does</th>
+                                <th>Days</th>
+                                <th>Comments</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-sm-1">
+                                    <input type="text" name="type" class="form-control">
+                                </td>
+                                <td class="col-sm-2">
+                                    <input type="text" name="mediciene_name" class="form-control">
+                                </td>
+                                <td class="col-sm-2">
+                                    <input type="number" name="mediciene_power" class="form-control">
+                                </td>
+                                <td class="col-sm-2">
+                                    <input type="number" name="dose" class="form-control">
+                                </td>
+                                <td class="col-sm-2">
+                                    <input type="number" name="day" class="form-control">
+                                </td>
+                                <td class="col-sm-3">
+                                    <input type="text" name="comments" class="form-control">
+                                </td>
+                                <td class="col-sm-2"><a class="deleteRow"></a></td>
+                                <td colspan="2" style="text-align: right">
+                                    <input type="button" class="btn btn-success" id="addrow" value="Add Mediciene">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            <footer><p>{{ object.address }}</p></footer>
+            <input type="submit" value="Submit" class="btn btn-success" >
+            <input type="reset" value="Reset" class="btn btn-danger">
+        </div>
+    </form>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var counter = 0;
+
+    $("#addrow").on("click", function () {
+        var newRow = $("<tr>");
+        var cols = "";
+
+        cols += '<td><input type="text" class="form-control" name="type' + counter + '"/></td>';
+        cols += '<td><input type="text" class="form-control" name="mediciene_name' + counter + '"/></td>';
+        cols += '<td><input type="number" class="form-control" name="mediciene_power' + counter + '"/></td>';
+        cols += '<td><input type="number" class="form-control" name="does' + counter + '"/></td>';
+        cols += '<td><input type="number" class="form-control" name="days' + counter + '"/></td>';
+        cols += '<td><input type="text" class="form-control" name="comments' + counter + '"/></td>';
+
+
+        cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
+        newRow.append(cols);
+        $("table.order-list").append(newRow);
+        counter++;
+    });
+
+    $("table.order-list").on("click", ".ibtnDel", function (event) {
+        $(this).closest("tr").remove();
+        counter -= 1
+    });
+});
+    </script>
+</body>
+{% endblock %}
+</html>
+

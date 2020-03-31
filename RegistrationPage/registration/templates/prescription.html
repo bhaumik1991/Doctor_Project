@@ -1,0 +1,13 @@
+<html>
+<body>
+<title>Precription</title>
+{% block content %}
+    <div class="row">
+        <h1 style="float: right; color: blue; font-family: Aharoni">{{ object.hospital_name }}</h1>
+        <br><br><br>
+        <p style="float: right; font-size: medium; font-family: Aharoni">{{ object.full_name }}</p>
+        <strong>Patient Name:</strong> {{ prescription.patient_name }}
+    </div>
+{% endblock %}
+</body>
+</html>
